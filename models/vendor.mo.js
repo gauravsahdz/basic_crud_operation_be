@@ -9,6 +9,12 @@ const vendorSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    validate: {
+      validator: function (v) {
+        return /^\d{16}$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid account number!`,
+    },
   },
   bankName: {
     type: String,
@@ -25,6 +31,13 @@ const vendorSchema = new mongoose.Schema({
     country: String,
     zipCode: {
       type: Number,
+      unique: true,
+      validate: {
+        validator: function (v) {
+          return /^\d{6}$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid zip code!`,
+      },
     },
   },
 });
